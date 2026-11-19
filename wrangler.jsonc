@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "maro-hado-sumi",
+  "compatibility_date": "2026-11-01",
+  // 静的サイトとして配信する（Cloudflare Workers の静的アセット）
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

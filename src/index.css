@@ -1,0 +1,344 @@
+@import '@fontsource/zen-kaku-gothic-new/400.css';
+@import '@fontsource/zen-kaku-gothic-new/500.css';
+@import '@fontsource/zen-kaku-gothic-new/700.css';
+@import '@fontsource/zen-old-mincho/700.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import 'tailwindcss';
+
+/*
+ * 墨と和紙のデザイン
+ *  - 色は和紙（明）と墨（暗）の2系統。差し色はくすんだ朱と真鍮だけ
+ *  - 角は立てる。線は細く、点線で区切る
+ *  - 見出しは明朝、本文はゴシック、数字と英字ラベルは等幅
+ * 既存のクラス名（amber / rose / emerald / stone / white）は、この配色に読み替える
+ */
+@theme {
+  --color-paper-0: #eeebe1;
+  --color-paper-1: #e2ded1;
+  --color-paper-2: #d3cebd;
+  --color-paper-3: #bdb7a2;
+  --color-ink-0: #2b2a26;
+  --color-ink-1: #3d3b35;
+  --color-ink-2: #55524a;
+  --color-ink-3: #7a766a;
+  --color-shu: #a8532f;
+  --color-brass: #a38a55;
+
+  --color-teal-board: #3a3833;
+  --color-sand: #d3cebd;
+  --color-grass: #8a906f;
+  --color-river: #6f8090;
+  --color-white: #f1eee6;
+  --color-black: #1c1b18;
+
+  --color-stone-50: #eeebe1;
+  --color-stone-100: #e2ded1;
+  --color-stone-200: #d3cebd;
+  --color-stone-300: #bdb7a2;
+  --color-stone-400: #9b9584;
+  --color-stone-500: #7a766a;
+  --color-stone-600: #615d53;
+  --color-stone-700: #4a4740;
+  --color-stone-800: #3d3b35;
+  --color-stone-900: #2b2a26;
+
+  --color-amber-50: #ece6d4;
+  --color-amber-100: #e3dabf;
+  --color-amber-200: #d6c99f;
+  --color-amber-300: #c8b47c;
+  --color-amber-400: #b79d63;
+  --color-amber-500: #a38a55;
+  --color-amber-600: #8a7246;
+  --color-amber-700: #6d5938;
+  --color-amber-800: #54452c;
+  --color-amber-900: #3c3121;
+
+  --color-rose-50: #ece2da;
+  --color-rose-100: #e3d1c6;
+  --color-rose-200: #d4b4a4;
+  --color-rose-300: #c3967f;
+  --color-rose-400: #b67a61;
+  --color-rose-500: #a8532f;
+  --color-rose-600: #8f4728;
+  --color-rose-700: #763b22;
+  --color-rose-800: #5c2e1b;
+  --color-rose-900: #432215;
+  --color-rose-950: #2e1810;
+
+  --color-emerald-50: #e3e5da;
+  --color-emerald-100: #d5d9c6;
+  --color-emerald-200: #bfc5a8;
+  --color-emerald-300: #a6ae89;
+  --color-emerald-400: #8d966e;
+  --color-emerald-500: #747d57;
+  --color-emerald-600: #5f6747;
+  --color-emerald-700: #4b523a;
+  --color-emerald-800: #393e2d;
+
+  --color-red-400: #a8532f;
+  --color-sky-200: #c8cfd3;
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+
+  --font-sans: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic UI', system-ui, sans-serif;
+  --font-serif: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink-0);
+  -webkit-tap-highlight-color: transparent;
+  font-feature-settings: 'palt';
+  /* 和紙: 細かい粒と、ごく薄い斜めの線と、右下の大きな墨の輪 */
+  background-color: var(--color-paper-1);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.16 0 0 0 0 0.14 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(135deg, rgb(43 42 38 / 0.025) 0 1px, transparent 1px 22px),
+    radial-gradient(circle at 92% 108%, transparent 0 34vmax, rgb(43 42 38 / 0.06) 34vmax 36vmax, transparent 36.5vmax),
+    radial-gradient(ellipse at 15% -10%, rgb(255 255 255 / 0.5), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ---------------------------------------------------------------- 部品 */
+
+/* 見出し: 明朝で、字間を少し空ける */
+.ttl {
+  font-family: var(--font-serif);
+  letter-spacing: 0.08em;
+}
+/* 英字・数字のラベル */
+.lbl {
+  font-family: var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+/* 点線の区切り */
+.dots {
+  height: 6px;
+  background-image: radial-gradient(circle, var(--color-ink-3) 1px, transparent 1.4px);
+  background-size: 9px 6px;
+  background-position: center;
+  opacity: 0.6;
+}
+/* 角に小さな鉤（かぎ）を付けた枠 */
+.frame {
+  position: relative;
+  border: 1px solid rgb(43 42 38 / 0.28);
+}
+.frame::before,
+.frame::after {
+  content: '';
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  border-color: var(--color-ink-1);
+  border-style: solid;
+}
+.frame::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.frame::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 2px 2px 0;
+}
+/* 墨のヘッダー帯（パネルの見出し） */
+.bar {
+  background: var(--color-ink-1);
+  color: var(--color-paper-0);
+  font-family: var(--font-serif);
+  letter-spacing: 0.1em;
+}
+/* 菱形の印 */
+.dia {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  transform: rotate(45deg);
+  background: currentColor;
+}
+/* 数字 */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@theme {
+  --animate-drop: drop 320ms cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+  --animate-pop: pop 260ms cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+  --animate-deal: deal 380ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  --animate-rise: rise 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  --animate-fade: fade 240ms ease-out both;
+  --animate-shake: shake 360ms ease-in-out both;
+  --animate-glow: glow 1.6s ease-in-out infinite;
+
+  @keyframes drop {
+    from { transform: scale(1.35) translateY(-10%); opacity: 0; filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.4)); }
+    to { transform: none; opacity: 1; filter: none; }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.2); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes deal {
+    from { transform: translateY(-14px) rotate(-6deg); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes rise {
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 1px rgb(200 180 124 / 0.8), 0 0 0 0 rgb(200 180 124 / 0.4); }
+    50% { box-shadow: 0 0 0 1px rgb(200 180 124 / 1), 0 0 10px 1px rgb(200 180 124 / 0.5); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+}
+
+@keyframes talk {
+  from { transform: translateY(0) rotate(-1.5deg); }
+  to { transform: translateY(-2px) rotate(1.5deg); }
+}
+
+@keyframes burst {
+  0% { transform: translate(-50%, -50%) scale(0.4) rotate(0deg); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--r)); opacity: 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(var(--fx, 30px), var(--fy, -20px)) scale(1.06); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* タブレット・スマホ: ボタンの連打で拡大されないように、盤や札の文字が選択されないように */
+button,
+[role='tab'] {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+img {
+  -webkit-touch-callout: none;
+}
+
+@keyframes turn-device {
+  0%, 25% { transform: rotate(0deg); }
+  55%, 85% { transform: rotate(-90deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ---------------------------------------------------------------- 主ボタンの菱形（回る飾り） */
+.ink-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* なでると光の帯が走る */
+.ink-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgb(241 238 230 / 0.14) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+}
+.ink-btn:hover::before {
+  transform: translateX(120%);
+}
+.gem {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1.3);
+}
+/* 外側: 線だけの菱形がゆっくり回る */
+.gem::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border: 1px solid var(--color-brass);
+  animation: gem-spin 7s linear infinite;
+}
+/* 内側: 塗りの菱形 */
+.gem::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-brass);
+  transform: rotate(45deg);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.4), background 0.3s;
+}
+.gem-r::before {
+  animation-direction: reverse;
+}
+.ink-btn:hover .gem::before {
+  animation-duration: 1.3s;
+}
+.ink-btn:hover .gem-l {
+  transform: translateX(-5px);
+}
+.ink-btn:hover .gem-r {
+  transform: translateX(5px);
+}
+.ink-btn:hover .gem::after {
+  transform: rotate(225deg) scale(1.35);
+  background: var(--color-paper-0);
+}
+.ink-btn:active .gem::before {
+  animation-duration: 0.35s;
+}
+.ink-btn:active .gem::after {
+  transform: rotate(405deg) scale(0.8);
+}
+.ink-btn:disabled .gem::before {
+  animation: none;
+  transform: rotate(45deg);
+}
+@keyframes gem-spin {
+  from { transform: rotate(45deg); }
+  to { transform: rotate(405deg); }
+}
+
+/* 見出しは全体で明朝にそろえる */
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  letter-spacing: 0.06em;
+}
