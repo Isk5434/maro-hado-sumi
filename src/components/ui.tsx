@@ -72,7 +72,7 @@ export function MenuRow({
         active ? 'bg-ink-1 text-paper-0' : 'hover:bg-ink-1 hover:text-paper-0'
       }`}
     >
-      <span className={`dia absolute -left-3 text-[10px] transition-opacity ${active ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+      <span aria-hidden className={`dia menu-ptr absolute -left-3 text-[10px] ${active ? 'is-on' : ''}`} />
       {icon}
       <span className="min-w-0 flex-1">
         <span className="block text-[15px] font-bold">{title}</span>

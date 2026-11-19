@@ -125,7 +125,7 @@ function Setup({ onLearn }: { onLearn: (m: TutorialMode, r: RulesId) => void }) 
             <div className="border-t border-ink-0/12">
               <MenuRow
                 onClick={() => onLearn('maro', rules)}
-                icon={<img src={face} alt="" className="h-10 w-10 shrink-0 border border-ink-1/40 object-cover" />}
+                icon={<img src={face} alt="" className="h-10 w-10 shrink-0 border border-ink-1/40 object-cover transition-transform duration-300 group-hover:-rotate-6" />}
                 title="まろいぬに教わる"
                 sub="まろいぬがしゃべって、遊びながら案内する"
               />
@@ -133,7 +133,7 @@ function Setup({ onLearn }: { onLearn: (m: TutorialMode, r: RulesId) => void }) 
                 onClick={() => onLearn('guide', rules)}
                 icon={
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-current/40">
-                    <span className="dia text-[12px]" />
+                    <span className="dia icon-gem text-[12px]" />
                   </span>
                 }
                 title="ルールガイド"

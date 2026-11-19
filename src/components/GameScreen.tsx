@@ -371,7 +371,7 @@ function TurnNotice({ game, actor }: { game: GameState; actor: number | null }) 
         <span className="lbl block text-[10px] text-ink-3">Next Turn</span>
         <span className="dots my-3 block" />
         <span className="flex items-center justify-center gap-3">
-          <span className="h-3 w-3 rotate-45" style={{ background: PLAYER_COLORS[actor] }} />
+          <span className="gem-enter h-3.5 w-3.5" style={{ background: PLAYER_COLORS[actor] }} />
           <span className="ttl text-3xl">{game.players[actor].name}</span>
         </span>
         <span className="mt-1 block text-sm text-ink-2">の番です</span>
@@ -389,7 +389,7 @@ function Header({ game, actor, canUndo, onUndo, onQuit }: { game: GameState; act
           <p className="lbl text-[9px] leading-none text-ink-3">まろいぬの覇道 · Turn</p>
           {actor !== null ? (
             <p className="ttl mt-0.5 flex items-center gap-2 truncate text-lg leading-tight">
-              <span className="h-2.5 w-2.5 shrink-0 rotate-45" style={{ background: PLAYER_COLORS[actor] }} />
+              <span key={actor} className="gem-enter h-2.5 w-2.5 shrink-0" style={{ background: PLAYER_COLORS[actor] }} />
               {game.players[actor].name}の番
             </p>
           ) : (
@@ -799,8 +799,15 @@ function HandItem({ active, onClick, label, children }: { active: boolean; onCli
 function BigButton({ tone, disabled, onClick, children }: { tone: 'rose' | 'amber' | 'stone'; disabled?: boolean; onClick: () => void; children: ReactNode }) {
   const color = { rose: 'bg-rose-700', amber: 'bg-amber-600', stone: 'bg-stone-600' }[tone]
   return (
-    <button type="button" disabled={disabled} onClick={onClick} className={`${color} ttl min-h-12 px-6 py-3 tracking-widest text-paper-0 active:translate-y-px disabled:opacity-35 ${tone === 'stone' ? 'w-full' : ''}`}>
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className={`${color} ink-btn ttl flex min-h-12 items-center justify-center gap-3 px-6 py-3 tracking-widest text-paper-0 active:translate-y-px disabled:opacity-35 ${tone === 'stone' ? 'w-full' : ''}`}
+    >
+      <span aria-hidden className="gem gem-l" />
       {children}
+      <span aria-hidden className="gem gem-r" />
     </button>
   )
 }

@@ -378,8 +378,10 @@ function EndButtons({ onPlay, onRestart }: { onPlay: () => void; onRestart: () =
       <button type="button" onClick={onRestart} className="rounded-none border-2 border-stone-300 bg-white px-4 py-3 text-sm font-bold text-stone-600">
         最初から
       </button>
-      <button type="button" onClick={onPlay} className="flex-1 rounded-none bg-amber-600 px-4 py-3 font-black text-white shadow-md active:scale-[0.98]">
-        {id === 'full' ? 'タイトルにもどる' : 'ゲームをはじめる →'}
+      <button type="button" onClick={onPlay} className="ink-btn flex flex-1 items-center justify-center gap-3 bg-ink-1 px-4 py-3 text-paper-0 shadow-md active:scale-[0.98]">
+        <span aria-hidden className="gem gem-l" />
+        <span className="ttl tracking-[0.15em]">{id === 'full' ? 'タイトルにもどる' : 'ゲームをはじめる'}</span>
+        <span aria-hidden className="gem gem-r" />
       </button>
     </div>
     </div>
@@ -453,11 +455,19 @@ function NavButtons({ index, done, last, onPrev, onNext, onPlay, onRestart }: Om
       <button
         type="button"
         onClick={onNext}
-        className={`flex-1 rounded-none px-4 py-3 font-black shadow-sm transition-all duration-300 active:scale-[0.98] ${
-          done ? 'bg-teal-board text-white shadow-md' : 'border-2 border-stone-300 bg-white text-stone-500'
+        className={`flex flex-1 items-center justify-center gap-3 px-4 py-3 font-black transition-all duration-300 active:scale-[0.98] ${
+          done ? 'ink-btn bg-teal-board text-white shadow-md' : 'border border-stone-400 bg-white text-stone-500'
         }`}
       >
-        {done ? '次へ →' : 'とばして次へ →'}
+        {done ? (
+          <>
+            <span aria-hidden className="gem gem-l" />
+            <span className="ttl tracking-[0.2em]">次へ</span>
+            <span aria-hidden className="gem gem-r" />
+          </>
+        ) : (
+          'とばして次へ →'
+        )}
       </button>
     </div>
   )
