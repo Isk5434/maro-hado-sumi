@@ -282,6 +282,7 @@ export function PlacePieceStage({ onDone }: StageProps) {
       <VillageBoard
         village={v}
         targets={piece ? new Set(pieceCells(v).map(([x, y]) => k(x, y))) : undefined}
+        pieceGhost={piece}
         freshPieces={piece ? undefined : new Set(['6,3'])}
         onCell={(x, y) => {
           const next = structuredClone(v)

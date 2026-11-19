@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { COLS, ROWS } from '../game/board'
 import { CARD_NAMES, PIECE_NAMES, STRENGTH } from '../game/engine'
-import type { Card, Cell, Village } from '../game/types'
+import type { Card, Cell, Piece, Village } from '../game/types'
 import { CardImage, PieceImage, TerrainTile } from './Tiles'
 
 interface Props {
@@ -15,6 +15,8 @@ interface Props {
   targetTone?: 'place' | 'danger' | 'pick'
   /** 置こうとしているカード。押せるマスに薄く表示して、向きを確かめられるようにする */
   ghost?: { card: Card; rot: number } | null
+  /** 置こうとしているコマ。置けるマスに、コマと同じ大きさの丸い光を出す */
+  pieceGhost?: Piece | null
   /** 直前の操作で置かれたカード／コマのマス（登場の動きをつける） */
   freshCards?: Set<string>
   freshPieces?: Set<string>
@@ -69,6 +71,7 @@ export function VillageBoard({
   selected,
   targetTone = 'place',
   ghost,
+  pieceGhost,
   freshCards,
   freshPieces,
   accent,
@@ -137,7 +140,7 @@ export function VillageBoard({
                     : undefined
                 }
                 className={`group relative aspect-square overflow-hidden rounded-none outline-none transition-transform duration-150 ${
-                  isSelected ? 'z-10 scale-95 ring-4 ring-amber-400' : isTarget ? `z-10 ring-2 ring-inset ${tone.ring} hover:scale-[1.04] active:scale-95` : ''
+                  isSelected ? 'z-10 scale-95 ring-4 ring-amber-400' : isTarget ? (pieceGhost && cell.placed ? 'z-10 active:scale-95' : `z-10 ring-2 ring-inset ${tone.ring} hover:scale-[1.04] active:scale-95`) : ''
                 } ${isTarget || isSelected ? 'cursor-pointer' : 'cursor-default'} ${lit ? 'z-20 ring-2 ring-amber-300' : ''} ${shake === key ? 'animate-shake' : ''} ${dragOver === key ? 'z-30 scale-110 ring-4 ring-white' : ''} ${hover === key && !dragOver ? 'brightness-110' : ''}`}
                 aria-label={`(${x + 1},${y + 1})${isTarget && !fitsNow ? ' 回すと置ける' : ''}`}
               >
@@ -170,7 +173,14 @@ export function VillageBoard({
                     )}
                   </>
                 )}
-                {isTarget && cell.placed && <span className={`absolute inset-0 animate-pulse ${tone.fill}`} />}
+                {isTarget && cell.placed && !pieceGhost && <span className={`absolute inset-0 animate-pulse ${tone.fill}`} />}
+                {isTarget && cell.placed && pieceGhost && (
+                  <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <span className="piece-spot relative aspect-square w-[64%] rounded-full" style={{ animationDelay: `${((x * 7 + y * 3) % 6) * 0.3}s` }}>
+                      <PieceImage piece={pieceGhost} className="piece-spot-ghost absolute inset-0 w-full" showStrength={false} />
+                    </span>
+                  </span>
+                )}
                 {glow?.has(key) && <span className="pointer-events-none absolute inset-0 animate-pulse bg-amber-300/35 shadow-[inset_0_0_10px_rgba(252,211,77,0.9)]" />}
                 {spotlight && !lit && <span className="pointer-events-none absolute inset-0 bg-[#1c1b18]/60 transition-opacity duration-300" />}
                 {labels?.[key] && (

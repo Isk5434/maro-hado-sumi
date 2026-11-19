@@ -146,6 +146,7 @@ function PieceOnCardStage({ onDone }: StageProps) {
       <VillageBoard
         village={v}
         targets={piece ? new Set(pieceCells(v).map(([x, y]) => k(x, y))) : undefined}
+        pieceGhost={piece}
         freshPieces={placedAt ? new Set([placedAt]) : undefined}
         labels={{ '6,3': '直線', '7,2': '農地', '6,2': '十字', '7,3': '館' }}
         onCell={(x, y) => {
@@ -239,6 +240,7 @@ function RiceStage({ onDone }: StageProps) {
       <VillageBoard
         village={v}
         targets={new Set(pieceCells(v).map(([x, y]) => k(x, y)))}
+        pieceGhost={P(kind)}
         freshPieces={last ? new Set([last.key]) : undefined}
         labels={{ '6,3': '農地', '7,2': '農地', '6,2': '直線', '7,3': '館' }}
         onCell={place}

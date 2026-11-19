@@ -237,6 +237,7 @@ export function GameScreen() {
               selected={selected}
               targetTone={tone}
               ghost={selCard && onOwnVillage ? { card: selCard, rot } : null}
+              pieceGhost={selPiece && onOwnVillage && !selCard ? selPiece : null}
               accent={PLAYER_COLORS[shown]}
               onCell={onCell}
             />
