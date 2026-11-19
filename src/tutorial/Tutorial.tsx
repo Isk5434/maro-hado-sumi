@@ -412,7 +412,7 @@ function EndButtons({ onPlay, onRestart }: { onPlay: () => void; onRestart: () =
 // ---------------------------------------------------------------- ルールガイド版
 
 const MAIN_GRID =
-  'mx-auto grid max-w-5xl gap-3 px-3 pt-3 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-6 lg:px-6 lg:pt-6 lg:pb-10 xl:max-w-[1400px] xl:grid-cols-[230px_minmax(0,1fr)_400px]'
+  'mx-auto grid max-w-5xl gap-3 px-3 pt-3 lg:max-w-6xl lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-6 lg:px-6 lg:pt-5 lg:pb-4 xl:max-w-[1400px] xl:grid-cols-[230px_minmax(0,1fr)_400px]'
 
 function GuideLayout({ index, done, last, stage, doneSet, onJump, onPrev, onNext, onPlay, onRestart }: LayoutProps) {
   const { steps: STEPS } = useRules()

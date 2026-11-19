@@ -492,7 +492,7 @@ function FullScoreStage() {
           <Rice className="w-5" /> 残り{rice}つ
         </span>
       </div>
-      <div className="flex flex-col gap-1">
+      <div className="grid gap-1 lg:grid-cols-2">
         {rows.map((r) => (
           <button
             key={r}
@@ -504,7 +504,7 @@ function FullScoreStage() {
             <span className="text-base font-black tabular-nums">{s[r]}点</span>
           </button>
         ))}
-        <p className="flex items-center justify-between border-t border-white/30 px-2.5 pt-1.5 text-sm font-black">
+        <p className="flex items-center justify-between border-t border-white/30 px-2.5 pt-1.5 text-sm font-black lg:col-span-2">
           <span>合計</span>
           <span key={s.total} className="animate-pop text-xl tabular-nums">
             {s.total}点

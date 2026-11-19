@@ -30,31 +30,31 @@ function Setup({ onLearn }: { onLearn: (m: TutorialMode, r: RulesId) => void }) 
         right={<span className="lbl text-[10px] text-ink-3">2–4 Players</span>}
       />
 
-      <main className="mx-auto grid w-full max-w-[1200px] flex-1 gap-6 px-4 py-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-10 lg:px-8 lg:py-10">
-        {/* 左: 題と絵 */}
-        <section className="flex flex-col gap-5">
+      <main className="mx-auto grid w-full max-w-[1200px] flex-1 content-start gap-6 px-4 py-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-x-10 lg:gap-y-4 lg:px-8 lg:py-6 [@media(min-height:1100px)]:lg:py-10">
+        {/* 左上: 題と絵 */}
+        <section className="flex flex-col gap-4 lg:col-start-1 lg:row-start-1">
           <div>
             <p className="lbl text-[11px] text-ink-3">Sengoku Road Building Game</p>
-            <h1 className="ttl mt-1 text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink-0">まろいぬの覇道</h1>
+            <h1 className="ttl mt-1 text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.05] text-ink-0 [@media(max-height:900px)]:lg:text-[3.2rem]">まろいぬの覇道</h1>
             <div className="mt-3 flex items-center gap-3">
               <span className="h-px w-10 bg-ink-1" />
               <p className="text-sm text-ink-2">そなたの城から我の城まで、街道をつなげてくれまろ</p>
             </div>
           </div>
           <figure className="frame bg-paper-0/60 p-2">
-            <img src={maroinu} alt="まろいぬ" className="aspect-[16/10] w-full object-cover object-[50%_22%]" />
+            <img src={maroinu} alt="まろいぬ" className="aspect-[16/10] w-full object-cover object-[50%_22%] landscape:lg:aspect-[16/8] [@media(max-height:900px)]:lg:aspect-[16/6.2] [@media(min-height:1100px)]:lg:aspect-[16/10]" />
             <figcaption className="flex items-center justify-between px-1 pt-2 text-[11px] text-ink-3">
               <span>お殿様　まろいぬ</span>
               <span className="lbl text-[9px]">Fig. 01</span>
             </figcaption>
           </figure>
-          <p className="max-w-prose text-sm leading-relaxed text-ink-2">
+          <p className="max-w-prose text-sm leading-relaxed text-ink-2 [@media(max-height:900px)]:lg:hidden">
             道カードで、自分の館からお殿様の城まで街道をつなごう。だれかがつないだらゲーム終了。得点のいちばん高い人の勝ちです。
           </p>
         </section>
 
-        {/* 右: 対局とルール */}
-        <section className="flex flex-col gap-5 lg:pt-6">
+        {/* 右: 対局 */}
+        <section className="flex flex-col gap-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 [@media(min-height:1100px)]:lg:pt-6">
           <Panel title="対局" en="New Game">
             <p className="lbl mb-1.5 text-[10px] text-ink-3">Players</p>
             <div className="grid grid-cols-3 border border-ink-1/50">
@@ -90,6 +90,10 @@ function Setup({ onLearn }: { onLearn: (m: TutorialMode, r: RulesId) => void }) 
             </InkButton>
           </Panel>
 
+        </section>
+
+        {/* 左下（スマホでは最後）: ルール */}
+        <section className="lg:col-start-1 lg:row-start-2">
           <Panel title="ルールを知る" en="Learn">
             <div className="relative mt-8 mb-3 grid grid-cols-2 border border-ink-1/50" role="tablist" aria-label="ルールの版">
               {(

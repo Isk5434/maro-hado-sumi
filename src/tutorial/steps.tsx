@@ -691,7 +691,7 @@ function ScoreStage() {
   return (
     <div className="flex flex-col gap-2 text-white">
       <VillageBoard village={v} spotlight={new Set(cellsFor[sel])} glow={new Set(cellsFor[sel])} />
-      <div className="flex flex-col gap-1">
+      <div className="grid gap-1 lg:grid-cols-2">
         {visible.map((r) => (
           <button
             key={r}
@@ -703,7 +703,7 @@ function ScoreStage() {
             <span className="text-base font-black tabular-nums">{(s as ScoreBreakdown)[r]}点</span>
           </button>
         ))}
-        <p className="flex items-center justify-between border-t border-white/30 px-2.5 pt-1.5 text-sm font-black">
+        <p className="flex items-center justify-between border-t border-white/30 px-2.5 pt-1.5 text-sm font-black lg:col-span-2">
           <span>合計</span>
           <span className="text-xl tabular-nums">{s.total}点</span>
         </p>
