@@ -388,7 +388,7 @@ export function KeepStage({ onDone }: StageProps) {
     <div className="flex flex-col gap-2">
       <HandRow>
         {!kept.card ? (
-          <button type="button" onClick={() => keep('card')} className="flex w-16 flex-col items-center gap-0.5 rounded-none bg-white p-1 shadow ring-2 ring-amber-500">
+          <button type="button" onClick={() => keep('card')} className="flex w-16 flex-col items-center gap-0.5 bg-paper-0 p-1 outline outline-1 outline-ink-1 transition hover:-translate-y-1">
             <CardImage card={card} className="w-full rounded-none" />
             <span className="text-[10px] font-bold">押してキープ</span>
           </button>
@@ -396,7 +396,7 @@ export function KeepStage({ onDone }: StageProps) {
           <span className="w-16 text-center text-[10px] opacity-60">（キープ済み）</span>
         )}
         {!kept.piece ? (
-          <button type="button" onClick={() => keep('piece')} className="flex w-16 flex-col items-center gap-0.5 rounded-none bg-white p-1 shadow ring-2 ring-amber-500">
+          <button type="button" onClick={() => keep('piece')} className="flex w-16 flex-col items-center gap-0.5 bg-paper-0 p-1 outline outline-1 outline-ink-1 transition hover:-translate-y-1">
             <PieceImage piece={piece} className="w-11" />
             <span className="text-[10px] font-bold">押してキープ</span>
           </button>
@@ -405,7 +405,7 @@ export function KeepStage({ onDone }: StageProps) {
         )}
       </HandRow>
       <div className="rounded-none border-2 border-[#7a766a] bg-[#e2ded1] p-2.5 text-[#2b2a26]">
-        <p className="mb-1.5 text-sm font-black">📦 キープ <span className="text-[11px]">カード2枚・コマ2個まで</span></p>
+        <p className="mb-1.5 flex items-center gap-2 text-sm"><span className="dia text-[8px]" /><span className="ttl">キープ</span> <span className="text-[11px]">カード2枚・コマ2個まで</span></p>
         <div className="grid grid-cols-[1fr_1fr_auto_0.7fr_0.7fr] items-center gap-2">
           <span className={slot}>{kept.card ? <span className="w-full animate-drop"><CardImage card={card} className="w-full rounded-none" /></span> : 'カード'}</span>
           <span className={slot}>カード</span>
@@ -508,7 +508,7 @@ export const makeBattleStage = ({ mine, min, max, rivals }: BattleSetup) =>
           onClick={roll}
           className="rounded-none bg-rose-700 py-2.5 font-black shadow transition active:scale-95 disabled:opacity-40"
         >
-          {pick.length >= min ? '⚔ 出陣してサイコロを振る' : `あと${min - pick.length}人選ぶ`}
+          {pick.length >= min ? '出陣してサイコロを振る' : `あと${min - pick.length}人選ぶ`}
         </button>
       ) : (
         <div className="flex flex-col gap-1.5">
@@ -530,7 +530,7 @@ export const makeBattleStage = ({ mine, min, max, rivals }: BattleSetup) =>
               同点！ {tied.map((f) => f.name).join('と')}だけがサイコロを振りなおし → {tied.map((f) => `${f.name} ${total(f, 1)}`).join('・')}
             </Note>
           )}
-          {phase === 'result' && <Note tone="good">🎖 功労者は{winner.name}！</Note>}
+          {phase === 'result' && <Note tone="good">功労者は{winner.name}</Note>}
           {done && (
             <button
               type="button"
@@ -573,7 +573,7 @@ export function AfterBattleStage({ onDone }: StageProps) {
   return (
     <div className="flex flex-col gap-2 text-white">
       <div className="grid grid-cols-2 gap-2 text-[12px] font-bold">
-        <p className="rounded-none bg-amber-300/25 p-2 ring-1 ring-amber-300">🎖 功労者：城の上から好きなカード1枚とコマ1つをもらえる</p>
+        <p className="rounded-none bg-amber-300/25 p-2 ring-1 ring-amber-300">功労者：城の上から好きなカード1枚とコマ1つをもらえる</p>
         <p className="rounded-none bg-rose-700/70 p-2">それ以外の人：村のカードを1枚捨てる</p>
       </div>
       <p className="text-xs font-bold text-white/80">負けた人の村 — コマがのっていないカードだけ捨てられる</p>
@@ -730,7 +730,7 @@ export function SummaryStage() {
         </div>
       ))}
       <div className="animate-rise rounded-none bg-amber-300/20 p-2.5 text-[12px] font-bold ring-1 ring-amber-300" style={{ animationDelay: '400ms' }}>
-        🏯 だれかが館から城まで道をつないだら終了。得点のいちばん高い人の勝ち！
+        だれかが館から城まで道をつないだら終了。得点のいちばん高い人の勝ち
       </div>
     </div>
   )

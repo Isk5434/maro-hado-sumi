@@ -249,7 +249,7 @@ function RiceStage({ onDone }: StageProps) {
             key={p}
             type="button"
             onClick={() => setKind(p)}
-            className={`flex w-16 flex-col items-center gap-0.5 rounded-none p-1 transition-all duration-200 ${kind === p ? '-translate-y-1 bg-white shadow-lg ring-3 ring-amber-500' : 'bg-white/50'}`}
+            className={`flex w-16 flex-col items-center gap-0.5 rounded-none p-1 transition-all duration-200 ${kind === p ? '-translate-y-1 bg-paper-0 shadow-[0_8px_16px_-8px_rgb(43_42_38/0.5)] outline outline-1 outline-ink-1' : 'bg-paper-0/45'}`}
           >
             <PieceImage piece={{ id: 0, kind: p }} className="w-11" />
             <span className="text-[10px] font-bold">{p === 'farmer' ? '農民' : '商人'}</span>
@@ -534,7 +534,7 @@ function FullSummaryStage() {
         </div>
       ))}
       <div className="animate-rise rounded-none bg-amber-300/20 p-2.5 text-[12px] font-bold ring-1 ring-amber-300" style={{ animationDelay: '450ms' }}>
-        🏯 だれかが館から城まで道をつないだら終了。得点表で数えて、いちばん高い人の勝ち！
+        だれかが館から城まで道をつないだら終了。得点表で数えて、いちばん高い人の勝ち
       </div>
     </div>
   )

@@ -27,7 +27,7 @@ export function Rich({ text, limit }: { text: string; limit?: number }) {
         const t = g.t.slice(0, left)
         left -= g.t.length
         return g.em ? (
-          <mark key={i} className="rounded-none bg-[linear-gradient(transparent_55%,#c8b47c_55%)] px-0.5 font-black text-inherit">
+          <mark key={i} className="bg-[linear-gradient(transparent_60%,#c8b47c8c_60%)] px-0.5 font-bold text-inherit">
             {t}
           </mark>
         ) : (
@@ -71,7 +71,7 @@ export const ROAD_PATH = ['7,3', '6,3', '5,3', '4,3', '3,3', '2,3', '1,3', '0,3'
 // ---------------------------------------------------------------- 舞台の部品
 
 export function Note({ tone = 'info', children }: { tone?: 'info' | 'bad' | 'good'; children: ReactNode }) {
-  const c = { info: 'border-white/30 bg-white/10 text-white', bad: 'border-rose-300 bg-rose-600/90 text-white', good: 'border-emerald-300 bg-emerald-600/90 text-white' }[tone]
+  const c = { info: 'border-paper-0/40 bg-paper-0/8 text-paper-0', bad: 'border-shu bg-rose-700/85 text-paper-0', good: 'border-brass bg-ink-0/55 text-paper-0' }[tone]
   return <p className={`animate-fade rounded-none border-l-4 px-3 py-2 text-[13px] leading-snug font-bold ${c}`}>{children}</p>
 }
 
@@ -111,7 +111,8 @@ export function MiniCastle({
       }}
     >
       <p className="mb-1.5 flex items-center gap-1.5 text-sm font-black">
-        🏯 城の上 {caption && <span className="text-[11px] font-bold opacity-75">{caption}</span>}
+        <span className="dia text-[8px] opacity-80" />
+        <span className="ttl">城の上</span> {caption && <span className="text-[11px] font-normal opacity-70">{caption}</span>}
         <span className="h-px flex-1 bg-white/25" />
       </p>
       <div className="grid grid-cols-4 gap-1.5">
@@ -147,7 +148,7 @@ export function MiniCastle({
 export function HandRow({ children, label = '手元' }: { children: ReactNode; label?: string }) {
   return (
     <div className="flex items-center gap-2 rounded-none border-t-4 border-[#3d3b35] bg-[#d3cebd] px-2.5 py-2 text-[#2b2a26]">
-      <span className="text-xs font-black [writing-mode:vertical-rl]">✋{label}</span>
+      <span className="ttl text-xs [writing-mode:vertical-rl]">{label}</span>
       {children}
     </div>
   )
@@ -181,7 +182,7 @@ export function HandCard({
             }
           : undefined
       }
-      className={`flex w-16 flex-col items-center gap-0.5 rounded-none p-1 transition-all duration-200 lg:w-20 ${onDragStart ? 'cursor-grab active:cursor-grabbing' : ''} ${active ? '-translate-y-1 bg-white shadow-lg ring-3 ring-amber-500' : 'bg-white/50'} hover:-translate-y-1.5 hover:rotate-[-2deg]`}
+      className={`flex w-16 flex-col items-center gap-0.5 rounded-none p-1 transition-all duration-200 lg:w-20 ${onDragStart ? 'cursor-grab active:cursor-grabbing' : ''} ${active ? '-translate-y-1 bg-paper-0 shadow-[0_8px_16px_-8px_rgb(43_42_38/0.5)] outline outline-1 outline-ink-1' : 'bg-paper-0/45'} hover:-translate-y-1.5 hover:rotate-[-2deg]`}
     >
       <CardImage card={card} rot={rot} className="w-full rounded-none" />
       <span className="text-[10px] leading-none font-bold">{CARD_NAMES[card.kind]}</span>

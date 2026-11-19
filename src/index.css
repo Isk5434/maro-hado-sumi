@@ -385,3 +385,9 @@ h3 {
     opacity: 1;
   }
 }
+
+/* 強調の下地はブラウザの黄色を使わない */
+mark {
+  background-color: transparent;
+  color: inherit;
+}

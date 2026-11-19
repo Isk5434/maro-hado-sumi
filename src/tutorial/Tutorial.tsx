@@ -61,7 +61,7 @@ export function Tutorial({
       <section className="relative overflow-hidden rounded-none bg-teal-board p-3 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5)] sm:p-4 lg:p-5">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #fff 1px, transparent 0)', backgroundSize: '14px 14px' }}
         />
         {/* PC: 舞台の上に章番号を大きく */}
@@ -70,12 +70,14 @@ export function Tutorial({
             {String(step.chapter + 1).padStart(2, '0')}
           </span>
           <span className="pb-0.5">
-            <span className="block text-[11px] font-black tracking-[0.25em] text-amber-200">{ruleset.chapters[step.chapter]}</span>
-            <span className="block text-lg leading-tight font-black">{step.title}</span>
+            <span className="lbl block text-[10px] text-paper-0/55">
+              Chapter {String(step.chapter + 1).padStart(2, '0')} · <span className="tracking-[0.1em] normal-case">{ruleset.chapters[step.chapter]}</span>
+            </span>
+            <span className="ttl block text-xl leading-tight">{step.title}</span>
           </span>
-          <span className="mb-2 h-px flex-1 bg-white/25" />
-          <span className="pb-0.5 text-xs font-bold text-white/60 tabular-nums">
-            {index + 1} / {STEPS.length}
+          <span className="dots mb-2 flex-1 opacity-40 invert" />
+          <span className="num pb-0.5 text-xs text-paper-0/60">
+            {String(index + 1).padStart(2, '0')} / {String(STEPS.length).padStart(2, '0')}
           </span>
         </div>
         <div className="relative">
@@ -103,17 +105,16 @@ export function Tutorial({
     <RulesContext.Provider value={ruleset}>
       <div
         className="relative min-h-dvh overflow-x-clip"
-        style={{ ['--color-teal-board' as string]: t.board, background: mode === 'maro' ? t.maroBg : t.guideBg }}
+        style={{ ['--color-teal-board' as string]: t.board }}
       >
         {/* PC: うしろでゆっくり動く色のにじみ */}
         <div aria-hidden className="pointer-events-none fixed inset-0 hidden lg:block">
-          <span className="absolute -top-24 -left-24 h-[28rem] w-[28rem] animate-[float_14s_ease-in-out_infinite] rounded-full bg-teal-board opacity-[0.14] blur-3xl" />
+          <span className="absolute -top-24 -left-24 h-[28rem] w-[28rem] animate-[float_14s_ease-in-out_infinite] rounded-full bg-teal-board opacity-[0.06] blur-3xl" />
           <span
-            className="absolute -right-32 bottom-0 h-[32rem] w-[32rem] animate-[float_18s_ease-in-out_infinite] rounded-full opacity-[0.12] blur-3xl"
+            className="absolute -right-32 bottom-0 h-[32rem] w-[32rem] animate-[float_18s_ease-in-out_infinite] rounded-full opacity-[0.05] blur-3xl"
             style={{ background: t.accent, ['--fx' as string]: '-40px', ['--fy' as string]: '30px' }}
           />
-          <span className="absolute top-1/3 left-1/2 h-80 w-80 animate-[float_22s_ease-in-out_infinite] rounded-full bg-amber-300 opacity-[0.12] blur-3xl" />
-        </div>
+                  </div>
         <div className="relative">
           <ProgressHeader mode={mode} index={index} onJump={go} onClose={onClose} onSwitchRules={onSwitchRules} />
           {mode === 'guide' ? <GuideLayout {...layout} /> : <MaroLayout {...layout} />}
@@ -200,8 +201,11 @@ function Burst() {
         />
       ))}
       <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <span className="block animate-pop rounded-none border-4 border-amber-300 bg-[#3d3b35] px-4 py-1 text-2xl font-black tracking-widest text-amber-100 shadow-2xl">
-          見事！
+        <span className="block rotate-[-8deg]">
+          <span className="block animate-pop border-[3px] border-shu bg-paper-0/90 px-5 py-1.5 text-shu shadow-[0_8px_24px_rgb(43_42_38/0.35)]">
+            <span className="ttl block text-3xl leading-none tracking-[0.3em]">見事</span>
+            <span className="lbl mt-1 block text-center text-[8px]">Clear</span>
+          </span>
         </span>
       </span>
     </div>
@@ -213,12 +217,17 @@ function Toc({ index, doneSet, onJump }: { index: number; doneSet: Set<number>; 
   const { steps, chapters } = useRules()
   return (
     <nav aria-label="目次" className="sticky top-32 hidden max-h-[calc(100dvh-9rem)] overflow-y-auto pr-1 xl:block">
+      <p className="mb-3 flex items-center gap-2">
+        <span className="ttl text-sm">目次</span>
+        <span className="lbl text-[9px] text-ink-3">Contents</span>
+        <span className="dots flex-1" />
+      </p>
       <ol className="flex flex-col gap-3">
         {chapters.map((name, c) => (
           <li key={name}>
-            <p className="mb-1 flex items-center gap-1.5 text-[11px] font-black tracking-widest text-stone-500">
-              <span className="flex h-5 w-5 items-center justify-center rounded-none bg-teal-board text-[10px] text-white">{c + 1}</span>
-              {name}
+            <p className="mb-1 flex items-center gap-2 text-ink-1">
+              <span className="num flex h-5 w-7 items-center justify-center bg-teal-board text-[10px] text-paper-0">{String(c + 1).padStart(2, '0')}</span>
+              <span className="ttl text-[13px]">{name}</span>
             </p>
             <ol className="flex flex-col gap-0.5 border-l-2 border-stone-300/70 pl-2">
               {steps.map((s, i) =>
@@ -231,7 +240,7 @@ function Toc({ index, doneSet, onJump }: { index: number; doneSet: Set<number>; 
                         i === index ? 'translate-x-1 bg-teal-board text-white shadow' : 'text-stone-600 hover:translate-x-1 hover:bg-white/70'
                       }`}
                     >
-                      <span className="w-3 shrink-0 text-center">{doneSet.has(i) ? '✓' : s.task ? '◇' : '・'}</span>
+                      <span className="w-3 shrink-0 text-center text-[10px]">{doneSet.has(i) ? '✓' : s.task ? '◇' : '·'}</span>
                       <span className="truncate">{s.title}</span>
                     </button>
                   </li>
@@ -241,7 +250,7 @@ function Toc({ index, doneSet, onJump }: { index: number; doneSet: Set<number>; 
           </li>
         ))}
       </ol>
-      <p className="mt-4 text-[11px] text-stone-400">◇ はやってみるステップ ・ ← → キーで移動</p>
+      <p className="mt-4 border-t border-ink-0/15 pt-2 text-[11px] text-ink-3">◇ やってみるステップ　✓ できた</p>
     </nav>
   )
 }
@@ -265,45 +274,57 @@ function ProgressHeader({
   const step = STEPS[index]
   const [popOpen, setPopOpen] = useState(true)
   const other: RulesId = id === 'short' ? 'full' : 'short'
+  const pad = (n: number) => String(n).padStart(2, '0')
   return (
-    <header className="sticky top-0 z-30 border-b border-black/10 bg-white/90 backdrop-blur">
-      <div className="mx-auto max-w-5xl px-3 pt-2 pb-2.5">
-        <div className="mb-2 flex items-center gap-2">
-          <button type="button" onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-none text-lg text-stone-500 hover:bg-stone-100" aria-label="閉じる">
+    <header className="sticky top-0 z-30 border-b border-ink-0/25 bg-paper-0/85 backdrop-blur-sm">
+      <div className="mx-auto max-w-[1400px] px-3 pt-2 pb-2 lg:px-8">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 shrink-0 items-center justify-center border border-ink-1/40 text-ink-2 transition-colors hover:bg-ink-1 hover:text-paper-0"
+            aria-label="閉じる"
+          >
             ✕
           </button>
-          <p className="flex min-w-0 flex-1 items-center gap-1.5 truncate text-sm font-black text-stone-800">
-            {mode === 'guide' ? 'ルールガイド' : 'まろいぬに教わる'}
-            <span className="shrink-0 rounded-none bg-teal-board px-1.5 py-0.5 text-[10px] leading-none text-white">{rulesName}</span>
-          </p>
-          <p className="text-xs font-bold text-stone-400 tabular-nums">
-            {index + 1} / {STEPS.length}
+          <div className="min-w-0 flex-1 leading-tight">
+            <p className="lbl text-[9px] text-ink-3">{mode === 'guide' ? 'Rule Guide' : 'Tutorial · Lord Maroinu'}</p>
+            <p className="flex items-center gap-2 truncate">
+              <span className="ttl text-base">{mode === 'guide' ? 'ルールガイド' : 'まろいぬに教わる'}</span>
+              <span className="shrink-0 bg-teal-board px-1.5 py-0.5 text-[10px] leading-none text-paper-0">{rulesName}</span>
+            </p>
+          </div>
+          <p className="num shrink-0 text-right leading-none">
+            <span className="text-xl text-ink-0">{pad(index + 1)}</span>
+            <span className="text-xs text-ink-3"> / {pad(STEPS.length)}</span>
           </p>
         </div>
         {popOpen && (
-          <div className="mb-2 flex animate-pop items-center gap-1.5">
+          <div className="mt-2 flex animate-pop items-center gap-2">
             <button
               type="button"
               onClick={() => onSwitchRules(other)}
-              className="group relative flex min-w-0 flex-1 items-center gap-2 rounded-none border-2 bg-[#eeebe1] py-1 pr-3 pl-1 text-left shadow-[0_3px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 active:translate-y-0"
-              style={{ borderColor: theme.accent }}
+              className="group flex min-w-0 flex-1 items-center gap-2 border border-ink-1/50 bg-paper-0 py-1 pr-3 pl-1 text-left shadow-[2px_2px_0_rgb(43_42_38/0.15)] transition hover:-translate-y-0.5 hover:shadow-[3px_4px_0_rgb(43_42_38/0.18)]"
             >
-              <img src={face} alt="" className="h-8 w-8 shrink-0 animate-[talk_0.9s_ease-in-out_infinite_alternate] rounded-none object-cover" />
-              <span className="min-w-0 truncate text-[13px] font-black text-stone-800">
-                {other === 'full' ? '通常版' : '短縮版'}のルールは
-                <mark className="mx-0.5 rounded-none bg-[linear-gradient(transparent_55%,#c8b47c_55%)] px-0.5 text-inherit">ここを押す</mark>
-                まろ！
+              <img src={face} alt="" className="h-7 w-7 shrink-0 animate-[talk_0.9s_ease-in-out_infinite_alternate] border border-ink-1/30 object-cover" />
+              <span className="min-w-0 truncate text-[13px] text-ink-1">
+                {other === 'full' ? '通常版' : '短縮版'}のルールは<b className="mx-0.5 text-shu">ここを押す</b>まろ
               </span>
-              <span className="ml-auto shrink-0 text-lg transition group-hover:translate-x-1" style={{ color: theme.accent }}>
-                →
-              </span>
+              <span className="lbl ml-auto hidden shrink-0 text-[9px] text-ink-3 sm:inline">Switch</span>
+              <span className="shrink-0 text-ink-1 transition group-hover:translate-x-1">→</span>
             </button>
-            <button type="button" onClick={() => setPopOpen(false)} className="h-8 w-8 shrink-0 rounded-none text-sm text-stone-400 hover:bg-stone-100" aria-label="案内を閉じる">
+            <button
+              type="button"
+              onClick={() => setPopOpen(false)}
+              className="h-8 w-8 shrink-0 text-sm text-ink-3 transition-colors hover:bg-paper-2"
+              aria-label="案内を閉じる"
+              data-theme={theme.accent}
+            >
               ✕
             </button>
           </div>
         )}
-        <ol className="flex gap-1" aria-label="章">
+        <ol className="mt-2 flex gap-[3px]" aria-label="章">
           {CHAPTERS.map((name, c) => {
             const steps = STEPS.map((s, i) => [s, i] as const).filter(([s]) => s.chapter === c)
             const first = steps[0][1]
@@ -312,13 +333,14 @@ function ProgressHeader({
             return (
               <li key={name} className="min-w-0" style={{ flex: steps.length }}>
                 <button type="button" onClick={() => onJump(first)} className="group block w-full text-left" aria-label={`${name}の章へ`} aria-current={current ? 'step' : undefined}>
-                  <span className="block h-1.5 overflow-hidden rounded-none bg-stone-200">
+                  <span className={`relative block h-[5px] overflow-hidden ${current ? 'bg-paper-3' : 'bg-paper-3/50'}`}>
                     <span className="block h-full bg-teal-board transition-[width] duration-500 ease-out" style={{ width: `${(passed / steps.length) * 100}%` }} />
                   </span>
                   <span
-                    className={`mt-1 block text-[10px] leading-none font-bold transition-colors ${current ? 'overflow-visible whitespace-nowrap text-teal-board' : 'hidden truncate text-stone-400 group-hover:text-stone-600 sm:block'}`}
+                    className={`mt-1 flex items-baseline gap-1 text-[10px] leading-none transition-colors ${current ? 'overflow-visible whitespace-nowrap text-ink-0' : 'hidden truncate text-ink-3 group-hover:text-ink-1 sm:flex'}`}
                   >
-                    {name}
+                    <span className="num text-[9px] opacity-70">{pad(c + 1)}</span>
+                    <span className={current ? 'font-bold' : ''}>{name}</span>
                   </span>
                 </button>
               </li>
@@ -334,11 +356,10 @@ function ChapterTag({ index }: { index: number }) {
   const { steps: STEPS, chapters: CHAPTERS } = useRules()
   const c = STEPS[index].chapter
   return (
-    <p className="flex items-center gap-2 text-[11px] font-black tracking-[0.2em] text-amber-700">
-      <span>
-        第{c + 1}章 {CHAPTERS[c]}
-      </span>
-      <span className="h-px flex-1 bg-amber-700/30" />
+    <p className="flex items-center gap-2">
+      <span className="lbl text-[10px] text-ink-3">Chapter {String(c + 1).padStart(2, '0')}</span>
+      <span className="ttl text-sm text-ink-1">{CHAPTERS[c]}</span>
+      <span className="dots flex-1" />
     </p>
   )
 }
@@ -373,9 +394,9 @@ function EndButtons({ onPlay, onRestart }: { onPlay: () => void; onRestart: () =
   // 通常版のゲームはまだ無いので、通常版の説明の最後はタイトルに戻る（onPlay には閉じる処理が入る）
   return (
     <div className="flex flex-col gap-1.5">
-    {id === 'full' && <p className="text-center text-[11px] text-stone-500">通常版のゲームは準備中です</p>}
+    {id === 'full' && <p className="text-center text-[11px] text-ink-3">通常版のゲームは準備中です</p>}
     <div className="flex gap-2">
-      <button type="button" onClick={onRestart} className="rounded-none border-2 border-stone-300 bg-white px-4 py-3 text-sm font-bold text-stone-600">
+      <button type="button" onClick={onRestart} className="border border-ink-1/50 bg-paper-0/70 px-4 py-3 text-sm text-ink-1 transition-colors hover:bg-ink-1 hover:text-paper-0">
         最初から
       </button>
       <button type="button" onClick={onPlay} className="ink-btn flex flex-1 items-center justify-center gap-3 bg-ink-1 px-4 py-3 text-paper-0 shadow-md active:scale-[0.98]">
@@ -404,8 +425,8 @@ function GuideLayout({ index, done, last, stage, doneSet, onJump, onPrev, onNext
         <div className="lg:sticky lg:top-32">{stage}</div>
         <article key={index} className="flex animate-fade flex-col gap-3 lg:sticky lg:top-32">
           <ChapterTag index={index} />
-          <h2 className="text-2xl leading-tight font-black text-stone-900 lg:text-3xl">{step.title}</h2>
-          <div className="flex flex-col gap-2 text-[15px] leading-relaxed text-stone-700 lg:text-base lg:leading-loose">
+          <h2 className="text-2xl leading-tight text-ink-0 lg:text-[2rem]">{step.title}</h2>
+          <div className="flex flex-col gap-2 text-[15px] leading-relaxed text-ink-1 lg:text-base lg:leading-loose">
             {step.body.map((p, i) => (
               <p key={i}>
                 <Rich text={p} />
@@ -413,25 +434,23 @@ function GuideLayout({ index, done, last, stage, doneSet, onJump, onPrev, onNext
             ))}
           </div>
           {step.task && (
-            <p
-              className={`flex items-center gap-2 rounded-none border-l-4 px-3 py-2.5 text-sm font-black transition-colors duration-300 ${
-                done ? 'border-emerald-600 bg-emerald-50 text-emerald-800' : 'border-amber-500 bg-amber-50 text-amber-900'
-              }`}
-            >
-              <span className={done ? 'animate-pop' : 'animate-bounce'}>{done ? '✓' : '👆'}</span>
-              {done ? 'できました！' : `やってみよう：${step.task}`}
+            <p className={`frame flex items-center gap-3 px-3 py-2.5 text-sm transition-colors duration-300 ${done ? 'bg-ink-1 text-paper-0' : 'bg-paper-0/80 text-ink-0'}`}>
+              <span className={`lbl shrink-0 border px-2 py-1 text-[10px] ${done ? 'border-brass text-brass' : 'border-ink-1/50'}`}>{done ? 'Clear' : 'Try'}</span>
+              {done ? <span key="d" className="gem-enter h-2.5 w-2.5 shrink-0 bg-brass" /> : <span key="t" className="dia turn-gem shrink-0 text-[9px] text-shu" />}
+              <span>{done ? 'できました' : step.task}</span>
             </p>
           )}
           <div className="hidden lg:block">
             <NavButtons index={index} done={done} last={last} onPrev={onPrev} onNext={onNext} onPlay={onPlay} onRestart={onRestart} />
-            <p className="mt-2 text-center text-[11px] text-stone-400">
-              <kbd className="rounded-none border border-stone-300 bg-white px-1">←</kbd> <kbd className="rounded-none border border-stone-300 bg-white px-1">→</kbd>{' '}
+            <p className="mt-2 flex items-center justify-center gap-1.5 text-[11px] text-ink-3">
+              <kbd className="num border border-ink-1/40 px-1.5">←</kbd>
+              <kbd className="num border border-ink-1/40 px-1.5">→</kbd>
               キーでも移動できます
             </p>
           </div>
         </article>
       </main>
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-black/10 bg-white/95 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-ink-0/25 bg-paper-0/90 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-sm lg:hidden">
         <div className="md:mx-auto md:max-w-3xl">
         <NavButtons index={index} done={done} last={last} onPrev={onPrev} onNext={onNext} onPlay={onPlay} onRestart={onRestart} />
         </div>
@@ -448,7 +467,8 @@ function NavButtons({ index, done, last, onPrev, onNext, onPlay, onRestart }: Om
         type="button"
         onClick={onPrev}
         disabled={index === 0}
-        className="rounded-none border-2 border-stone-300 bg-white px-4 py-3 text-sm font-bold text-stone-600 disabled:opacity-30"
+        className="border border-ink-1/50 bg-paper-0/70 px-4 py-3 text-ink-1 transition-colors hover:bg-ink-1 hover:text-paper-0 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-ink-1"
+        aria-label="前へ"
       >
         ←
       </button>
@@ -456,7 +476,7 @@ function NavButtons({ index, done, last, onPrev, onNext, onPlay, onRestart }: Om
         type="button"
         onClick={onNext}
         className={`flex flex-1 items-center justify-center gap-3 px-4 py-3 font-black transition-all duration-300 active:scale-[0.98] ${
-          done ? 'ink-btn bg-teal-board text-white shadow-md' : 'border border-stone-400 bg-white text-stone-500'
+          done ? 'ink-btn bg-teal-board text-paper-0 shadow-md' : 'border border-ink-1/35 bg-paper-0/60 text-ink-2 hover:bg-paper-2'
         }`}
       >
         {done ? (
@@ -466,7 +486,10 @@ function NavButtons({ index, done, last, onPrev, onNext, onPlay, onRestart }: Om
             <span aria-hidden className="gem gem-r" />
           </>
         ) : (
-          'とばして次へ →'
+          <>
+            <span className="lbl text-[9px] text-ink-3">Skip</span>
+            <span className="text-sm">とばして次へ →</span>
+          </>
         )}
       </button>
     </div>
@@ -531,64 +554,81 @@ function MaroLayout({ index, done, last, stage, doneSet, onJump, onPrev, onNext,
         <Toc index={index} doneSet={doneSet} onJump={onJump} />
         <div className="flex flex-col gap-2 lg:sticky lg:top-32">
           <div key={index} className="flex animate-fade items-baseline gap-2 lg:hidden">
-            <span className="shrink-0 rounded-none bg-[#3d3b35] px-2 py-0.5 text-[11px] font-black text-white">
-              第{step.chapter + 1}章 {CHAPTERS[step.chapter]}
+            <span className="lbl shrink-0 bg-ink-1 px-2 py-1 text-[9px] text-paper-0">
+              Ch.{String(step.chapter + 1).padStart(2, '0')} <span className="tracking-normal">{CHAPTERS[step.chapter]}</span>
             </span>
-            <h2 className="truncate text-lg font-black text-stone-900">{step.title}</h2>
+            <h2 className="truncate text-lg text-ink-0">{step.title}</h2>
           </div>
           {stage}
         </div>
         <div className="fixed inset-x-0 bottom-0 z-30 lg:sticky lg:top-32 lg:bottom-auto">
           <div className="md:mx-auto md:max-w-3xl lg:max-w-none">
           {/* PC: まろいぬの全身 */}
-          <div className="relative mb-3 hidden overflow-hidden rounded-none border-4 border-[#3d3b35] bg-[#cfcabb] shadow-xl lg:block">
-            <img
-              src={maroinu}
-              alt="まろいぬ"
-              className={`h-64 w-full object-cover object-[50%_20%] ${typing ? 'animate-[talk_0.3s_ease-in-out_infinite_alternate]' : 'animate-[bob_3.5s_ease-in-out_infinite]'}`}
-            />
-            <span className="absolute bottom-2 left-2 rounded-none bg-[#3d3b35] px-2 py-1 text-xs font-black tracking-widest text-white shadow">お殿様 まろいぬ</span>
+          <figure className="frame relative mb-3 hidden bg-paper-0/75 p-2 shadow-[0_12px_28px_-16px_rgb(43_42_38/0.55)] lg:block">
+            <div className="overflow-hidden border border-ink-0/15">
+              <img
+                src={maroinu}
+                alt="まろいぬ"
+                className={`h-60 w-full object-cover object-[50%_20%] ${typing ? 'animate-[talk_0.3s_ease-in-out_infinite_alternate]' : 'animate-[bob_3.5s_ease-in-out_infinite]'}`}
+              />
+            </div>
+            <figcaption className="flex items-center gap-2 px-1 pt-2">
+              <span className="ttl text-sm">お殿様　まろいぬ</span>
+              <span className="lbl text-[9px] text-ink-3">Lord Maroinu</span>
+              <span className="dots flex-1" />
+              <span className={`h-2 w-2 rotate-45 transition-colors ${typing ? 'bg-shu' : 'bg-ink-3/50'}`} title={typing ? '話している' : ''} />
+            </figcaption>
             {done && step.task && (
-              <span key={index} className="absolute top-2 right-2 animate-pop rounded-none bg-amber-300 px-2 py-1 text-sm font-black text-stone-900 shadow">
-                天晴れ！
+              <span key={index} className="absolute top-5 right-5 rotate-[-8deg]">
+                <span className="block animate-pop border-[3px] border-shu bg-paper-0/85 px-3 py-1 text-shu shadow-[0_6px_16px_rgb(43_42_38/0.3)]">
+                  <span className="ttl text-lg tracking-[0.25em]">天晴れ</span>
+                </span>
               </span>
             )}
-          </div>
+          </figure>
           {waiting && step.task && (
-            <p className="mx-3 mb-2 flex animate-rise items-center gap-2 rounded-none bg-amber-400 px-3 py-2 text-sm font-black text-stone-900 shadow-lg lg:mx-0">
-              <span className="animate-bounce">👆</span>
+            <p className="frame mx-3 mb-2 flex animate-rise items-center gap-3 bg-ink-1 px-3 py-2 text-sm text-paper-0 shadow-lg lg:mx-0">
+              <span className="lbl shrink-0 border border-paper-0/40 px-2 py-0.5 text-[9px]">Try</span>
+              <span className="dia turn-gem shrink-0 text-[9px] text-shu" />
               {step.task}
             </p>
           )}
-          <div className="border-t-4 border-[#3d3b35] bg-[#eeebe1] px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(0,0,0,0.18)] lg:rounded-none lg:border-4 lg:border-t-[6px]">
+          <div className="frame bg-paper-0/95 px-3 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-10px_28px_-8px_rgb(43_42_38/0.35)] backdrop-blur-sm lg:shadow-[0_12px_28px_-16px_rgb(43_42_38/0.55)]">
+            <p className="mb-2 flex items-center gap-2">
+              <span className="bar px-2 py-0.5 text-xs">まろいぬ</span>
+              <span className="lbl text-[9px] text-ink-3">Lord Maroinu</span>
+              <span className="dots flex-1" />
+              <span className="num text-[10px] text-ink-3">
+                {String(Math.min(line, lines.length - 1) + 1).padStart(2, '0')}/{String(lines.length).padStart(2, '0')}
+              </span>
+            </p>
             <div className="flex items-start gap-3">
               <div className="flex shrink-0 flex-col items-center gap-1 lg:hidden">
                 <img
                   src={face}
                   alt="まろいぬ"
-                  className={`h-16 w-16 rounded-none border-2 border-[#3d3b35] object-cover shadow ${typing ? 'animate-[talk_0.28s_ease-in-out_infinite_alternate]' : ''}`}
+                  className={`h-14 w-14 border border-ink-1/40 object-cover ${typing ? 'animate-[talk_0.28s_ease-in-out_infinite_alternate]' : ''}`}
                 />
-                <span className="rounded-none bg-[#3d3b35] px-1.5 py-0.5 text-[10px] leading-none font-black text-white">まろいぬ</span>
               </div>
               <button type="button" onClick={advance} className="relative min-h-[5.5rem] flex-1 text-left" aria-label="続きを読む">
-                <span className="block text-[15px] leading-relaxed font-bold text-stone-800 lg:text-lg lg:leading-relaxed">
+                <span className="block text-[15px] leading-relaxed font-medium text-ink-0 lg:text-lg lg:leading-relaxed">
                   <Rich text={text} limit={count} />
-                  {typing && <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-stone-500" />}
+                  {typing && <span className="ml-0.5 inline-block h-4 w-[2px] translate-y-0.5 animate-pulse bg-ink-2" />}
                 </span>
-                {!typing && (!atEnd || (done && !last)) && <span className="absolute right-0 bottom-0 animate-bounce text-xs text-[#3d3b35]">▼</span>}
+                {!typing && (!atEnd || (done && !last)) && <span className="dia absolute right-1 bottom-1 animate-bounce text-[8px] text-ink-1" />}
               </button>
             </div>
             <div className="mt-2 flex items-center gap-2">
-              <button type="button" onClick={back} disabled={index === 0 && line === 0} className="rounded-none px-2 py-1.5 text-xs font-bold text-stone-500 disabled:opacity-30">
+              <button type="button" onClick={back} disabled={index === 0 && line === 0} className="px-2 py-1.5 text-xs text-ink-2 transition-colors hover:bg-paper-2 disabled:opacity-30">
                 ← もどる
               </button>
               <span className="flex flex-1 justify-center gap-1">
                 {lines.map((_, i) => (
-                  <span key={i} className={`h-1.5 rounded-none transition-all duration-300 ${i === line ? 'w-4 bg-[#3d3b35]' : i < line ? 'w-1.5 bg-[#3d3b35]/50' : 'w-1.5 bg-stone-300'}`} />
+                  <span key={i} className={`h-1.5 transition-all duration-300 ${i === line ? 'w-5 bg-ink-1' : i < line ? 'w-1.5 bg-ink-1/45' : 'w-1.5 bg-paper-3'}`} />
                 ))}
               </span>
               {last && atEnd && !typing ? null : (
-                <button type="button" onClick={onNext} className="rounded-none px-2 py-1.5 text-xs font-bold text-stone-400" disabled={last}>
+                <button type="button" onClick={onNext} className="px-2 py-1.5 text-xs text-ink-3 transition-colors hover:bg-paper-2" disabled={last}>
                   とばす →
                 </button>
               )}

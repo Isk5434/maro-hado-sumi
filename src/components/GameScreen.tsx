@@ -298,7 +298,7 @@ export function GameScreen() {
                 <span className="block text-[11px] font-normal text-stone-600">村かキープのコマを押して選ぶ</span>
               </p>
               <BigButton tone="rose" disabled={battlePick.length !== battleNeed} onClick={submitBattle}>
-                ⚔ 出陣
+                出陣
               </BigButton>
             </div>
           ) : phase.kind === 'reward' ? (
